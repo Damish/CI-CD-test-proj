@@ -1,14 +1,15 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9.0-eclipse-temurin-11' 
-            args '-v /root/.m2:/root/.m2' 
-        }
-    }
+    agent any
     stages {
-        stage('Build') { 
+        stage('Checkout') {
             steps {
-                sh 'mvn clean install' 
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                // Build the Maven project
+                sh 'mvn clean package'
             }
         }
     }
